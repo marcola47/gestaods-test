@@ -6,9 +6,9 @@ export function ModalAction(): JSX.Element {
   )
 }
 
-export function ModalPacient(): JSX.Element {
+export function ModalPatient(): JSX.Element {
   return (
-    <div className="modal modal--pacient">
+    <div className="modal modal--patient">
     
     </div>
   )

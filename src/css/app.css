@@ -1,0 +1,223 @@
+@import url("https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@200;300;400;500;600;700;800;900&display=swap");
+@keyframes fade_in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+* {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  box-sizing: border-box;
+}
+
+html, button, input, select, textarea {
+  font-family: "Source Sans 3", sans-serif;
+}
+
+.app {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow: hidden;
+  width: 100dvw;
+  height: 100dvh;
+  background-color: hsl(215, 15%, 95%);
+}
+.app__logo {
+  max-width: 256px;
+}
+
+.patients {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  width: 1040px;
+  height: 720px;
+  padding: 24px;
+  border-radius: 6px;
+  background-color: #fff;
+  box-shadow: 0px 0px 20px hsla(0, 0%, 0%, 0.1);
+}
+.patients__header {
+  display: flex;
+  justify-content: space-between;
+  font-weight: 600;
+}
+.patients__actions {
+  display: flex;
+  gap: 16px;
+}
+.patients__searchbar {
+  display: flex;
+  gap: 4px;
+  padding: 8px;
+  border: 2px solid hsl(215, 15%, 90%);
+  border-radius: 3px;
+}
+.patients__searchbar__icon {
+  color: hsl(210, 90%, 50%);
+}
+.patients__labels {
+  display: grid;
+  grid-template-columns: 7fr 5fr 8fr 9fr 6fr 3fr;
+  padding: 16px 32px 16px 16px;
+  border-radius: 3px;
+  background-color: hsl(215, 15%, 95%);
+  font-size: 0.9rem;
+}
+.patients .label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: hsl(215, 15%, 23%);
+  font-weight: 600;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+          user-select: none;
+}
+.patients .label__controls {
+  display: flex;
+  align-items: center;
+  color: hsl(210, 90%, 50%);
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+.patients .label__control {
+  transition: all 0.1s ease-in-out;
+}
+.patients .label__control:hover {
+  color: hsl(210, 90%, 65%);
+}
+.patients .label__control--active {
+  color: hsl(255, 90%, 60%);
+}
+.patients .label__control--active:hover {
+  color: hsl(255, 90%, 65%);
+}
+.patients__list {
+  overflow-y: scroll;
+}
+.patients__list::-webkit-scrollbar {
+  width: 12px;
+  -webkit-transition: all 0.1s ease-in-out;
+  transition: all 0.1s ease-in-out;
+}
+.patients__list::-webkit-scrollbar-track {
+  border-top-right-radius: 3px;
+  border-bottom-right-radius: 3px;
+  background: hsl(215, 15%, 95%);
+}
+.patients__list::-webkit-scrollbar-thumb {
+  border-top-right-radius: 3px;
+  border-bottom-right-radius: 3px;
+  background: hsl(215, 15%, 65%);
+}
+.patients__list::-webkit-scrollbar-thumb:hover {
+  background: hsl(215, 15%, 75%);
+}
+.patients__list > :nth-child(odd) {
+  background-color: hsl(215, 15%, 95%);
+}
+.patients__list .patient {
+  display: grid;
+  grid-template-columns: 7fr 5fr 8fr 9fr 6fr 3fr;
+  padding: 16px;
+  border-radius: 3px;
+  font-size: 0.9rem;
+}
+.patients__list .patient__data {
+  width: calc(100% - 16px);
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.patients__list .patient__name {
+  color: hsl(210, 90%, 50%);
+  font-weight: 600;
+}
+
+.seeder__btns {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  border-radius: 3px;
+  font-size: 1rem;
+  font-weight: 600;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+          user-select: none;
+  cursor: pointer;
+  transition: all 0.1s ease-in-out;
+}
+.btn:hover {
+  background-color: hsl(215, 15%, 20%);
+}
+.btn--full {
+  width: 100%;
+}
+.btn--disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+.btn--border {
+  border: 2px solid hsl(215, 15%, 75%);
+  color: #fff;
+  background-color: transparent;
+}
+.btn--border:hover {
+  color: hsl(215, 15%, 15%);
+  background-color: hsl(215, 15%, 75%);
+}
+.btn--blue {
+  color: hsl(210, 90%, 50%);
+}
+.btn--green {
+  color: hsl(155, 90%, 40%);
+}
+.btn--yellow {
+  color: hsl(50, 100%, 45%);
+}
+.btn--red {
+  color: hsl(0, 90%, 52%);
+}
+.btn--bg-blue {
+  color: white;
+  background-color: hsl(210, 90%, 50%);
+}
+.btn--bg-blue:hover {
+  background-color: hsl(210, 90%, 60%);
+}
+.btn--bg-green {
+  color: white;
+  background-color: hsl(155, 90%, 40%);
+}
+.btn--bg-green:hover {
+  background-color: hsl(155, 90%, 50%);
+}
+.btn--bg-yellow {
+  color: white;
+  background-color: hsl(50, 100%, 45%);
+}
+.btn--bg-yellow:hover {
+  background-color: hsl(50, 100%, 55%);
+}
+.btn--bg-red {
+  color: white;
+  background-color: hsl(0, 90%, 52%);
+}
+.btn--bg-red:hover {
+  background-color: hsl(0, 90%, 60%);
+}/*# sourceMappingURL=app.css.map */

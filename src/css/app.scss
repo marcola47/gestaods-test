@@ -1,0 +1,236 @@
+@import 'variables';
+@import url('https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@200;300;400;500;600;700;800;900&display=swap');
+
+* { 
+  margin: 0; 
+  padding: 0; 
+  border: 0; 
+  outline: 0; 
+  box-sizing: border-box;
+}
+
+html, button, input, select, textarea {
+  font-family: 'Source Sans 3', sans-serif;
+}
+
+.app {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  overflow: hidden;
+  width: 100dvw;
+  height: 100dvh;
+
+  background-color: $grey-25;
+
+  &__logo {
+    max-width: 256px;
+  }
+}
+
+.patients {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+
+  width: 1040px;
+  height: 720px;
+  padding: 24px;
+  border-radius: $br-m;
+
+  background-color: #fff;
+  box-shadow: 0px 0px 20px hsla(0, 0%, 0%, 0.1);
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    font-weight: 600;
+  }
+
+  &__actions {
+    display: flex;
+    gap: 16px;
+  }
+
+  &__searchbar {
+    display: flex;
+    gap: 4px;
+
+    padding: 8px;
+    border: 2px solid $grey-50;
+    border-radius: $br-s;
+
+    &__icon {
+      color: $blue-600;
+    }
+  }
+
+  &__labels {
+    display: grid;
+    grid-template-columns: 7fr 5fr 8fr 9fr 6fr 3fr;
+
+    padding: 16px 32px 16px 16px;
+    border-radius: $br-s;
+
+    background-color: $grey-25;
+    font-size: 0.9rem;
+  }
+
+  .label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    color: $grey-700;
+    font-weight: 600;
+    user-select: none;
+
+    &__controls {
+      display: flex;
+      align-items: center;
+      color: $blue-600;
+
+      font-size: 0.9rem;
+      cursor: pointer;
+    }
+
+    &__control {
+      @include transition;
+
+      &:hover {
+        color: $blue-400;
+      }
+
+      &--active {
+        &:hover {
+          color: $purple-400;
+        }
+
+        color: $purple-500;
+      }
+    }
+  }
+
+  &__list {
+    overflow-y: scroll;
+    @include scrollbar_small;
+
+    & > :nth-child(odd) {
+      background-color: $grey-25;
+    }
+
+    .patient {
+      display: grid;
+      grid-template-columns: 7fr 5fr 8fr 9fr 6fr 3fr;
+  
+      padding: 16px;
+      border-radius: $br-s;
+
+      font-size: 0.9rem;
+
+      &__data {
+        width: calc(100% - 16px);
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+      }
+
+      &__name {
+        color: $blue-600;
+        font-weight: 600;
+      }
+    }
+  }
+}
+
+.seeder {
+  &__btns {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+}
+
+.btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+
+  padding: 8px 16px;
+  border-radius: $br-s;
+
+  font-size: 1rem;
+  font-weight: 600;
+
+  user-select: none;
+  cursor: pointer;
+  @include transition;
+
+  &:hover 
+  { background-color: $grey-750 }
+
+  &--full 
+  { width: 100%; }
+
+  &--disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+  }
+
+  &--border {
+    border: 2px solid $grey-200;
+    color: #fff;
+    background-color: transparent;
+
+    &:hover {
+      color: $grey-800; 
+      background-color: $grey-200; 
+    }
+  }
+
+  &--blue 
+  { color: $blue-600 }
+
+  &--green 
+  { color: $green-500 }
+
+  &--yellow 
+  { color: $yellow-700 }
+
+  &--red 
+  { color: $red-400 }
+
+  &--bg-blue {
+    color: white;
+    background-color: $blue-600;
+
+    &:hover 
+    { background-color: $blue-500 }
+  }
+
+  &--bg-green {
+    color: white;
+    background-color: $green-500;
+
+    &:hover 
+    { background-color: $green-400 }
+  }
+
+  &--bg-yellow {
+    color: white;
+    background-color: $yellow-700;
+
+    &:hover 
+    { background-color: $yellow-500 }
+  }
+
+  &--bg-red {
+    color: white;
+    background-color: $red-400;
+
+    &:hover 
+    { background-color: $red-300 }
+  }
+}

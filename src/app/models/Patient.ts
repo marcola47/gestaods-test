@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 
-const PacientSchema = new mongoose.Schema({  
+const PatientSchema = new mongoose.Schema({  
   cpf: {
     type: String,
     required: true,
@@ -10,7 +10,7 @@ const PacientSchema = new mongoose.Schema({
   rg: {
     type: String,
     required: true,
-    maxlength: 10
+    maxlength: 9
   },
 
   name: {
@@ -98,5 +98,5 @@ const PacientSchema = new mongoose.Schema({
   }
 })
 
-PacientSchema.index({ cpf: 1 }, { unique: true });
-export default mongoose.models.Pacient || mongoose.model('Pacient', PacientSchema);
+PatientSchema.index({ cpf: 1 }, { unique: true });
+export default mongoose.models.Patient || mongoose.model('Patient', PatientSchema);

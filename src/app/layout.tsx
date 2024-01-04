@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import '@/css/global.css';
+import '@/css/app.css';
 
 export const metadata: Metadata = {
   title: 'GestãoDS - Teste técnico',

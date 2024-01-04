@@ -1,4 +1,4 @@
-type Pacient = {
+type TPatient = {
   cpf: string;
   rg: string;
   name: string;
@@ -6,8 +6,8 @@ type Pacient = {
   email: string;
   birth: Date;
   nationality: string;
-  gender: male | female | other | not_declared;
-  marital_status: single | married | divorced | widower;
+  gender: "male" | "female" | "other" | "not_declared";
+  marital_status: "single" | "married" | "divorced" | "widower";
   address: {
     ibge: string;
     cep: string;

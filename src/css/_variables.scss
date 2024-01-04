@@ -1,1 +1,121 @@
-$blue: hsl(213, 84%, 47%);
+$blue-900: hsl(210, 90%, 30%);
+$blue-800: hsl(210, 90%, 35%);
+$blue-700: hsl(210, 90%, 45%);
+$blue-600: hsl(210, 90%, 50%);
+$blue-500: hsl(210, 90%, 60%);
+$blue-400: hsl(210, 90%, 65%);
+$blue-300: hsl(210, 90%, 75%);
+$blue-200: hsl(210, 90%, 85%);
+$blue-100: hsl(210, 90%, 90%);
+$blue-50:  hsl(210, 90%, 95%);
+$blue-25:  hsl(210, 90%, 98%);
+
+$purple-900: hsl(255, 90%, 30%);
+$purple-800: hsl(255, 90%, 35%);
+$purple-700: hsl(255, 90%, 45%);
+$purple-600: hsl(255, 90%, 50%);
+$purple-500: hsl(255, 90%, 60%);
+$purple-400: hsl(255, 90%, 65%);
+$purple-300: hsl(255, 90%, 75%);
+$purple-200: hsl(255, 90%, 85%);
+$purple-100: hsl(255, 90%, 90%);
+$purple-50:  hsl(255, 90%, 95%);
+$purple-25:  hsl(255, 90%, 98%);
+
+$green-bg: hsl(155, 15%, 20%);
+$green-900: hsl(155, 90%, 15%);
+$green-800: hsl(155, 90%, 20%);
+$green-700: hsl(155, 90%, 25%);
+$green-600: hsl(155, 90%, 30%);
+$green-500: hsl(155, 90%, 40%);
+$green-400: hsl(155, 90%, 50%);
+$green-300: hsl(155, 90%, 65%);
+$green-200: hsl(155, 90%, 80%);
+$green-100: hsl(155, 90%, 90%);
+$green-50:  hsl(155, 90%, 95%);
+$green-25:  hsl(155, 90%, 98%);
+
+$red-bg: hsl(0, 15%, 20%);
+$red-900: hsl(0, 90%, 15%);
+$red-800: hsl(0, 90%, 20%);
+$red-700: hsl(0, 90%, 25%);
+$red-600: hsl(0, 90%, 30%);
+$red-500: hsl(0, 90%, 40%);
+$red-400: hsl(0, 90%, 52%);
+$red-300: hsl(0, 90%, 60%);
+$red-200: hsl(0, 90%, 80%);
+$red-100: hsl(0, 90%, 90%);
+$red-50:  hsl(0, 90%, 95%);
+$red-25:  hsl(0, 90%, 98%);
+
+$yellow-bg: hsl(50, 15%, 20%);
+$yellow-900: hsl(50, 100%, 30%);
+$yellow-800: hsl(50, 100%, 35%);
+$yellow-700: hsl(50, 100%, 45%);
+$yellow-600: hsl(50, 100%, 50%);
+$yellow-500: hsl(50, 100%, 55%);
+$yellow-400: hsl(50, 100%, 60%);
+$yellow-300: hsl(50, 100%, 70%);
+$yellow-200: hsl(50, 100%, 80%);
+$yellow-100: hsl(50, 100%, 90%);
+$yellow-50:  hsl(50, 100%, 95%);
+$yellow-25:  hsl(50, 100%, 98%);
+
+$grey-900: hsl(215, 15%, 5%);
+$grey-850: hsl(215, 15%, 10%);
+$grey-800: hsl(215, 15%, 15%);
+$grey-750: hsl(215, 15%, 20%);
+$grey-700: hsl(215, 15%, 23%);
+$grey-650: hsl(215, 15%, 30%);
+$grey-600: hsl(215, 15%, 35%);
+$grey-550: hsl(215, 15%, 40%);
+$grey-500: hsl(215, 15%, 45%);
+$grey-450: hsl(215, 15%, 50%);
+$grey-400: hsl(215, 15%, 55%);
+$grey-350: hsl(215, 15%, 60%);
+$grey-300: hsl(215, 15%, 65%);
+$grey-250: hsl(215, 15%, 70%);
+$grey-200: hsl(215, 15%, 75%);
+$grey-150: hsl(215, 15%, 80%);
+$grey-100: hsl(215, 15%, 85%);
+$grey-50:  hsl(215, 15%, 90%);
+$grey-25:  hsl(215, 15%, 95%);
+
+$br-g: 12px;
+$br-b: 9px;
+$br-m: 6px;
+$br-s: 3px;
+
+@mixin transition
+{ transition: all 0.1s ease-in-out }
+
+@keyframes fade_in {
+  from { opacity: 0; }
+  to   { opacity: 1; }  
+}
+
+@mixin anim_fade_in
+{ animation: fade_in 0.15s forwards ease-in-out }
+
+@mixin scrollbar_small() {
+  &::-webkit-scrollbar {
+    width: 12px;
+    @include transition;
+  }
+  
+  &::-webkit-scrollbar-track {
+    border-top-right-radius: $br-s;
+    border-bottom-right-radius: $br-s;
+    background: $grey-25;
+  }
+  
+  &::-webkit-scrollbar-thumb {
+    border-top-right-radius: $br-s;
+    border-bottom-right-radius: $br-s;
+    background: $grey-300;
+  }
+  
+  &::-webkit-scrollbar-thumb:hover {
+    background: $grey-200;
+  }
+}
