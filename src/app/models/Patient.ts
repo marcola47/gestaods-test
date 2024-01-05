@@ -55,6 +55,11 @@ const PatientSchema = new mongoose.Schema({
     enum: ["single", "married", "divorced", "widower"],
   },
 
+  observations: {
+    type: String,
+    maxlength: 1024
+  },
+
   address: {
     ibge: {
       type: String,

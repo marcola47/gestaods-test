@@ -18,6 +18,7 @@ html, button, input, select, textarea {
   flex-direction: column;
   align-items: center;
 
+  position: relative;
   overflow: hidden;
   width: 100dvw;
   height: 100dvh;
@@ -113,6 +114,7 @@ html, button, input, select, textarea {
   }
 
   &__list {
+    height: 100%;
     overflow-y: scroll;
     @include scrollbar_small;
 
@@ -130,17 +132,153 @@ html, button, input, select, textarea {
       font-size: 0.9rem;
 
       &__data {
-        width: calc(100% - 16px);
-        overflow: hidden;
-        white-space: nowrap;
-        text-overflow: ellipsis;
+        width: 100%;
+        display: flex;
+        align-items: center;
+
+        div {
+          width: calc(100% - 16px);
+          overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+        }
       }
 
       &__name {
         color: $blue-600;
         font-weight: 600;
       }
+
+      &__actions {
+        display: flex;
+        align-items: center;
+
+        position: relative;
+        font-size: 1.3rem;
+
+        &__toggle {
+          width: 100%;
+          @include transition;
+          cursor: pointer;
+
+          &:hover {
+            color: $blue-600;
+          }
+        }
+      }
+
+      &__menu {
+        z-index: 2;
+        position: absolute;
+        top: -16px;
+        right: -16px;
+        border: 2px solid $grey-50;
+        border-radius: $br-s;
+
+        color: $grey-550;
+        background-color: #fff;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+
+        font-size: 1rem;
+
+        & > :first-child {
+          border-bottom-left-radius: 0px;
+          border-bottom-right-radius: 0px;
+          border-bottom: 2px solid $grey-50;
+        }
+      }
+
+      &__action {
+        width: 128px;
+        padding: 8px;
+        
+        cursor: pointer;
+        @include transition;
+
+        &:hover {
+          color: $blue-600;
+          background-color: $blue-100;
+        }
+
+        &--danger:hover {
+          color: $red-500;
+          background-color: $red-100;
+        }
+      }
     }
+  }
+}
+
+.backdrop {
+  display: grid;
+  place-items: center;
+  
+  position: absolute;
+  inset: 0;
+
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal {
+  border-radius: $br-m;
+  
+  background-color: #fff;
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2);
+
+  &--action {
+    & > * {
+      padding: 16px;
+    }
+
+    &__header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      h2 {
+        color: $purple-800;
+        font-size: 1.3rem;
+      }
+
+      svg {
+        font-size: 1.5rem;
+        color: $grey-450;
+
+        cursor: pointer;
+        @include transition;
+
+        &:hover {
+          color: $grey-300;
+        }
+      }
+    }
+
+    &__body {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+      border-block: 2px solid $grey-150;
+      color: $grey-650;
+    }
+  }
+
+  &__art {
+    max-width: 96px;
+  }
+
+  &__prompt {
+    margin-block: 24px 4px;
+  }
+
+  &__warning {
+    font-weight: 600;
+  }
+
+  &__btns {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
   }
 }
 
@@ -168,69 +306,44 @@ html, button, input, select, textarea {
   cursor: pointer;
   @include transition;
 
-  &:hover 
-  { background-color: $grey-750 }
+  &:hover { 
+    background-color: $grey-750 
+  }
 
-  &--full 
-  { width: 100%; }
+  &--full { 
+    width: 100%; 
+  }
 
   &--disabled {
     cursor: not-allowed;
     opacity: 0.5;
   }
 
-  &--border {
-    border: 2px solid $grey-200;
-    color: #fff;
+  &--border-blue {
+    border: 2px solid $blue-500;
+    color: $blue-500;
     background-color: transparent;
 
     &:hover {
-      color: $grey-800; 
-      background-color: $grey-200; 
+      background-color: $blue-100; 
     }
   }
 
-  &--blue 
-  { color: $blue-600 }
-
-  &--green 
-  { color: $green-500 }
-
-  &--yellow 
-  { color: $yellow-700 }
-
-  &--red 
-  { color: $red-400 }
-
   &--bg-blue {
-    color: white;
+    color: #fff;
     background-color: $blue-600;
 
-    &:hover 
-    { background-color: $blue-500 }
-  }
-
-  &--bg-green {
-    color: white;
-    background-color: $green-500;
-
-    &:hover 
-    { background-color: $green-400 }
-  }
-
-  &--bg-yellow {
-    color: white;
-    background-color: $yellow-700;
-
-    &:hover 
-    { background-color: $yellow-500 }
+    &:hover { 
+      background-color: $blue-500 
+    }
   }
 
   &--bg-red {
-    color: white;
+    color: #fff;
     background-color: $red-400;
 
-    &:hover 
-    { background-color: $red-300 }
+    &:hover { 
+      background-color: $red-300 
+    }
   }
 }

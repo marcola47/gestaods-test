@@ -9,11 +9,6 @@ export async function GET() {
   return NextResponse.json({ status: 200, data: patients })
 }
 
-export async function POST(req: NextRequest) {
-  await dbConnection();
-  return NextResponse.json({ status: 200 })
-}
-
 export async function PUT(req: NextRequest) {
   await dbConnection();
   return NextResponse.json({ status: 200 })
@@ -21,5 +16,12 @@ export async function PUT(req: NextRequest) {
 
 export async function DELETE(req: NextRequest) {
   await dbConnection();
-  return NextResponse.json({ status: 200 })
+  const { cpf } = await req.json();
+  
+  const deletedPatient = await Patient.findOneAndDelete({ cpf });
+
+  return NextResponse.json({ 
+    status: 200, 
+    data: deletedPatient.cpf 
+  })
 }

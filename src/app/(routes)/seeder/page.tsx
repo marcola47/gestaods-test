@@ -4,9 +4,7 @@ export default function Seeder(): JSX.Element {
   async function seedPatients() {
     const res = await fetch("api/patients/seed", {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      }
+      headers: { "Content-Type": "application/json" }
     });
 
     console.log( (await res.json()).status );
@@ -15,9 +13,7 @@ export default function Seeder(): JSX.Element {
   async function deletePatients() {
     const res = await fetch("api/patients/seed", {
       method: "DELETE",
-      headers: {
-        "Content-Type": "application/json"
-      }
+      headers: { "Content-Type": "application/json" }
     });
 
     console.log( (await res.json()).status );

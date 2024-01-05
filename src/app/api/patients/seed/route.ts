@@ -4,19 +4,6 @@ import { faker } from "@faker-js/faker";
 import dbConnection from "@/libs/dbConnection"
 import Patient from "@/app/models/Patient";
 
-function cepCallback(address: any, conteudo: any) {
-  if (!("erro" in conteudo)) {
-    address.ibge = conteudo.ibge;
-    address.cep = conteudo.cep;
-    address.uf = conteudo.uf;
-    address.city = conteudo.localidade;
-    address.neighborhood = conteudo.bairro;
-    address.street = conteudo.logradouro;
-    address.number = faker.number.int({ min: 1, max: 3000 });
-    address.complement = faker.string.sample({ min: 32, max: 128 });
-  }
-}
-
 export async function POST() {
   try {
     dbConnection();
@@ -45,17 +32,29 @@ export async function POST() {
         complement: ""
       }
 
-      // const cepResponse = await fetch(`https://viacep.com.br/ws/${cep}/json/`, {
-      //   method: "GET",
-      //   headers: {
-      //     "Content-Type": "application/json"
-      //   }
-      // })
+      // Eu botei esse seeder pra rodar 100 vezes a cada vez que clica, e simplesmente o viacep bloqueou meu ip kkkkkkkkkkkkkkk
+      // tive que usar o 4g no PC pra continuar testando, e em outros projetos também não consigo mais usar o viacep 👍
 
-      // if (cepResponse.ok) {
-      //   const cepJson = await cepResponse.json()
-      //   cepCallback(address, cepJson)
-      // }
+      const cepResponse = await fetch(`https://viacep.com.br/ws/${cep}/json/`, {
+        method: "GET",
+        headers: { "Content-Type": "application/json" }
+      })
+
+      if (cepResponse.ok) {
+        const cepJSON = await cepResponse.json()
+
+        // não sei se realmente precisa fazer essa condição, mas no exemplo do viaCEP tá assim
+        if (!("erro" in cepJSON)) {
+          address.ibge = cepJSON.ibge;
+          address.cep = cepJSON.cep;
+          address.uf = cepJSON.uf;
+          address.city = cepJSON.localidade;
+          address.neighborhood = cepJSON.bairro;
+          address.street = cepJSON.logradouro;
+          address.number = faker.number.int({ min: 1, max: 3000 });
+          address.complement = faker.string.sample({ min: 32, max: 128 });
+        }
+      }
 
       const patient = new Patient({
         cpf: faker.string.numeric(11),

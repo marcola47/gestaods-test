@@ -8,6 +8,7 @@ type TPatient = {
   nationality: string;
   gender: "male" | "female" | "other" | "not_declared";
   marital_status: "single" | "married" | "divorced" | "widower";
+  observations: string;
   address: {
     ibge: string;
     cep: string;

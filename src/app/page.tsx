@@ -1,14 +1,19 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
+import { usePatientsContext } from "./context/Patients";
+import { useUIContext } from "./context/Ui";
 
 import List from "@/components/List"
 import Patient from "@/components/Patient";
+import { ModalAction, ModalPatient } from "@/components/Modals";
+
 import { formatDate } from "@/libs/formatting";
 import { FaMagnifyingGlass, FaPlus, FaArrowUp, FaArrowDown } from "react-icons/fa6";
 
 export default function App() {
-  const [loading, setLoading] = useState<boolean>(true);
-  const [patients, setPatients] = useState<TPatient[]>([]);
+  const { patients, loading, labels } = usePatientsContext();
+  const { patientModalShown, setPatientModalShown, actionModalShown } = useUIContext();
+
   const [filteredPatients, setFilteredPatients] = useState<TPatient[]>([]);
   const [sortedPatients, setSortedPatients] = useState<TPatient[]>([]);
 
@@ -19,54 +24,7 @@ export default function App() {
 
   const latestFilter = useRef<string>("");
 
-  const labels = [
-    { name: "Nome", key: "name" },
-    { name: "CPF", key: "cpf" },
-    { name: "Data de Nascimento", key: "birth" },
-    { name: "Email", key: "email" },
-    { name: "Cidade", key: "address.city" },
-    { name: "Ações", key: "actions" }
-  ]
-
-  async function getPatients() {
-    const res = await fetch("/api/patients", {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json"
-      }
-    })
-
-    const { status, error, data } = await res.json();
-
-    if (status !== 200)
-      throw new Error(error)
-    
-    else {
-      setPatients(data);
-      setFilteredPatients(data);
-      setLoading(false);
-    }
-  }
-
-  async function filterPatients() {
-    if (loading || patients.length === 0) {
-      return;
-    }
-
-    const filteredPatients = patients.filter(patient => {
-      return (
-        patient.name.toLowerCase().includes(latestFilter.current.toLowerCase()) ||
-        patient.cpf.toLowerCase().includes(latestFilter.current.toLowerCase()) ||
-        patient.email.toLowerCase().includes(latestFilter.current.toLowerCase()) ||
-        patient.address?.city.toLowerCase().includes(latestFilter.current.toLowerCase()) ||
-        formatDate(patient.birth).toLowerCase().includes(latestFilter.current.toLowerCase())
-      );
-    });
-
-    setFilteredPatients(filteredPatients);
-  }
-
-  async function sortPatients() {
+  useEffect(() => { 
     if (loading || patients.length === 0)
       return;
 
@@ -91,19 +49,37 @@ export default function App() {
     });
 
     setSortedPatients(sortedPatients);
-  }
-
+  }, [sortParam, sortMethod, filteredPatients]);
+  
   useEffect(() => {
+    if (filteredPatients.length === 0 && patients.length > 0)
+      setFilteredPatients(patients);
+
     if (debounceTimer !== null) 
       clearTimeout(debounceTimer);
     
     latestFilter.current = filter;
-    const timerId = setTimeout(() => { filterPatients() }, 500);
+    
+    const timerId = setTimeout(() => {
+      if (loading || patients.length === 0) {
+        return;
+      }
+  
+      const filteredPatients = patients.filter(patient => {
+        return (
+          patient.name.toLowerCase().includes(latestFilter.current.toLowerCase()) ||
+          patient.cpf.toLowerCase().includes(latestFilter.current.toLowerCase()) ||
+          patient.email.toLowerCase().includes(latestFilter.current.toLowerCase()) ||
+          patient.address?.city.toLowerCase().includes(latestFilter.current.toLowerCase()) ||
+          formatDate(patient.birth).toLowerCase().includes(latestFilter.current.toLowerCase())
+        );
+      });
+  
+      setFilteredPatients(filteredPatients);
+    }, 500);
+
     setDebounceTimer(timerId);
   }, [filter, patients]);
-
-  useEffect(() => { getPatients() }, []);
-  useEffect(() => { sortPatients() }, [sortParam, sortMethod, filteredPatients]);
   
   function Label({ 
     itemData: label 
@@ -166,7 +142,7 @@ export default function App() {
 
             <div 
               className="btn btn--bg-blue"
-              onClick={ () => {} }
+              onClick={ () => {setPatientModalShown(true)} }
             >
               <FaPlus/>
               <span>Adicionar Paciente</span>
@@ -194,6 +170,9 @@ export default function App() {
           </>
         }
       </div>
+
+      { actionModalShown && <ModalAction/> }
+      { patientModalShown && <ModalPatient/> }
     </div>
   )
 }
