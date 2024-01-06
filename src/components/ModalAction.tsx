@@ -2,17 +2,17 @@
 import { usePatientsContext } from "@/app/context/Patients";
 import { useUIContext } from "@/app/context/Ui";
 
-import { FaX, FaXmark } from "react-icons/fa6";
+import { FaXmark } from "react-icons/fa6";
 
-export function ModalAction(): JSX.Element {
+export default function ModalAction(): JSX.Element {
   const { patients, setPatients } = usePatientsContext();
-  const { setActionModalShown, setActionModalData, actionModalData } = useUIContext();
+  const { setModalActionShown, setModalActionData, modalActionData } = useUIContext();
   
   async function deletePatient() {
     const res = await fetch(`/api/patients`, {
       method: "DELETE",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ cpf: actionModalData })
+      body: JSON.stringify({ cpf: modalActionData })
     })
 
     const { status, error, data } = await res.json();
@@ -28,16 +28,28 @@ export function ModalAction(): JSX.Element {
   }
   
   function hideModal() {
-    setActionModalShown(false);
-    setActionModalData("");
+    setModalActionShown(false);
+    setModalActionData("");
   }
 
   return (
-    <div className="backdrop">
-      <div className="modal modal--action">
+    <div 
+      className="backdrop"
+      onClick={ hideModal }
+    >
+      <div 
+        className="modal modal--action"
+        onClick={ e => e.stopPropagation() }
+      >
         <div className="modal--action__header">
-          <h2>Excluir paciente?</h2>
-          <FaXmark onClick={ () => setActionModalShown(false) }/>
+          <h2 className="modal__title">
+            Excluir paciente?
+          </h2>
+          
+          <FaXmark 
+            className="modal__close"
+            onClick={ () => setModalActionShown(false) }
+          />
         </div>
   
         <div className="modal--action__body">
@@ -70,15 +82,6 @@ export function ModalAction(): JSX.Element {
           </div>
         </div>
       </div>
-    </div>
-  )
-}
-
-export function ModalPatient(): JSX.Element {
-  
-  return (
-    <div className="modal modal--patient">
-      asdasdasda
     </div>
   )
 }

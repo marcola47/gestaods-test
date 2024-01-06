@@ -5,14 +5,16 @@ import { useUIContext } from "./context/Ui";
 
 import List from "@/components/List"
 import Patient from "@/components/Patient";
-import { ModalAction, ModalPatient } from "@/components/Modals";
+
+import ModalAction from "@/components/ModalAction";
+import ModalPatient from "@/components/ModalPatient";
 
 import { formatDate } from "@/libs/formatting";
 import { FaMagnifyingGlass, FaPlus, FaArrowUp, FaArrowDown } from "react-icons/fa6";
 
 export default function App() {
   const { patients, loading, labels } = usePatientsContext();
-  const { patientModalShown, setPatientModalShown, actionModalShown } = useUIContext();
+  const { modalPatientShown, setModalPatientShown, modalActionShown } = useUIContext();
 
   const [filteredPatients, setFilteredPatients] = useState<TPatient[]>([]);
   const [sortedPatients, setSortedPatients] = useState<TPatient[]>([]);
@@ -142,7 +144,7 @@ export default function App() {
 
             <div 
               className="btn btn--bg-blue"
-              onClick={ () => {setPatientModalShown(true)} }
+              onClick={ () => {setModalPatientShown(true)} }
             >
               <FaPlus/>
               <span>Adicionar Paciente</span>
@@ -171,8 +173,8 @@ export default function App() {
         }
       </div>
 
-      { actionModalShown && <ModalAction/> }
-      { patientModalShown && <ModalPatient/> }
+      { modalActionShown && <ModalAction/> }
+      { modalPatientShown && <ModalPatient/> }
     </div>
   )
 }

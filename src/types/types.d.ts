@@ -1,3 +1,6 @@
+type TGender = "male" | "female" | "other" | "not_declared";
+type TMaritalStatus = "single" | "married" | "divorced" | "widower" | "not_declared";
+
 type TPatient = {
   cpf: string;
   rg: string;
@@ -6,8 +9,8 @@ type TPatient = {
   email: string;
   birth: Date;
   nationality: string;
-  gender: "male" | "female" | "other" | "not_declared";
-  marital_status: "single" | "married" | "divorced" | "widower";
+  gender: TGender;
+  marital_status: TMaritalStatus;
   observations: string;
   address: {
     ibge: string;
@@ -16,7 +19,7 @@ type TPatient = {
     city: string;
     neighborhood: string;
     street: string;
-    number: number;
-    complement: string;
+    number: number | null | undefined;
+    complement: string | null | undefined;
   }
 }

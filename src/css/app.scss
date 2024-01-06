@@ -225,6 +225,18 @@ html, button, input, select, textarea {
   background-color: #fff;
   box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2);
 
+  &__close {
+    font-size: 1.5rem;
+    color: $grey-450;
+
+    cursor: pointer;
+    @include transition;
+
+    &:hover {
+      color: $grey-300;
+    }
+  }
+
   &--action {
     & > * {
       padding: 16px;
@@ -239,18 +251,6 @@ html, button, input, select, textarea {
         color: $purple-800;
         font-size: 1.3rem;
       }
-
-      svg {
-        font-size: 1.5rem;
-        color: $grey-450;
-
-        cursor: pointer;
-        @include transition;
-
-        &:hover {
-          color: $grey-300;
-        }
-      }
     }
 
     &__body {
@@ -263,8 +263,143 @@ html, button, input, select, textarea {
     }
   }
 
+  &--patient {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+
+    width: 800px;
+    min-height: 700px;
+    padding: 24px 20px;
+
+    &__header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      border-bottom: 2px solid $grey-150;
+    }
+
+    &__body {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+  }
+
+  &__tabs {
+    display: flex;
+    gap: 16px;
+
+    margin-bottom: -2px;
+    font-size: 1.3rem;
+  }
+
+  &__tab {
+    padding-bottom: 4px;
+    border-bottom: 2px solid $grey-150;
+    color: $grey-650;
+    
+    font-weight: 600;
+    cursor: pointer;
+    @include transition;
+
+    &--active, &:hover {
+      color: $blue-600;
+      border-bottom: 2px solid $blue-600;
+    }
+  }
+
+  &__input {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+
+    &--textarea {
+      grid-column: span 3;
+    }
+
+    input, textarea {
+      padding: 12px;
+      border: 2px solid $grey-50;
+      border-radius: $br-m;
+
+      resize: none;
+      @include transition;
+
+      &:hover {
+        background-color: $grey-25;
+      }
+    }
+  }
+
+  &__select {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    position: relative;
+
+    input {
+      z-index: 3;
+      padding: 12px;
+      border: 2px solid $grey-50;
+      border-radius: $br-m;
+
+      cursor: pointer;
+      @include transition;
+
+      &:hover {
+        background-color: $grey-25;
+      }
+    }
+
+    &__chevron {
+      z-index: 4;
+      position: absolute;
+      top: 40px;
+      right: 16px;
+
+      color: $grey-300;
+      font-size: 1.1rem;
+      cursor: pointer;
+    }
+
+    &__list {
+      overflow-y: scroll;
+      z-index: 2;
+      position: absolute;
+      top: 64px;
+      width: 100%;
+      max-height: 160px;
+      padding-top: 6px;
+      border: 2px solid $grey-50;
+      border-radius: $br-s;
+      
+      background-color: #fff;
+      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+      @include scrollbar_small;
+
+      .list-item {
+        padding: 8px;
+        cursor: pointer;
+        @include transition;
+
+        &:hover, &--selected {
+          color: $blue-600;
+          background-color: $blue-100;
+        }
+      }
+    }
+  }
+
+  &__date-picker {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
   &__art {
-    max-width: 96px;
+    max-width: 128px;
   }
 
   &__prompt {
@@ -279,6 +414,8 @@ html, button, input, select, textarea {
     display: flex;
     justify-content: flex-end;
     gap: 8px;
+
+    margin-top: auto;
   }
 }
 
@@ -312,6 +449,10 @@ html, button, input, select, textarea {
 
   &--full { 
     width: 100%; 
+  }
+
+  &--wide {
+    width: 200px;
   }
 
   &--disabled {

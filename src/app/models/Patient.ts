@@ -10,7 +10,7 @@ const PatientSchema = new mongoose.Schema({
   rg: {
     type: String,
     required: true,
-    maxlength: 9
+    maxlength: 10
   },
 
   name: {
@@ -52,7 +52,7 @@ const PatientSchema = new mongoose.Schema({
 
   marital_status: {
     type: String,
-    enum: ["single", "married", "divorced", "widower"],
+    enum: ["single", "married", "divorced", "widower", "not_declared"],
   },
 
   observations: {
@@ -93,11 +93,13 @@ const PatientSchema = new mongoose.Schema({
 
     number: {
       type: Number,
+      required: false,
       maxlength: 6
     },
 
     complement: {
       type: String,
+      required: false,
       maxlength: 128
     }
   }

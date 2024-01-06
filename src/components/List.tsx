@@ -7,7 +7,6 @@ type ListProps = {
   elements: any[], 
   ListItem: any, 
   style?: any,
-  unwrapped?: boolean,
   forwardedRef?: RefObject<HTMLUListElement | null>;
 }
 
@@ -17,29 +16,11 @@ export default function List({
   elements, 
   ListItem, 
   style = {}, 
-  unwrapped, 
   forwardedRef 
 }: ListProps): JSX.Element {
   const listRef = useRef<HTMLUListElement | null>(null);
   useImperativeHandle(forwardedRef, () => listRef.current);
   
-  if (unwrapped) {
-    return (
-      <>
-        { 
-          elements.map(element => { 
-            return (
-              <ListItem 
-                itemData={ element } 
-                key={ element.id ?? uuid() }
-              />
-            ) 
-          }) 
-        }
-      </>
-    )
-  }
-
   return (
     <ul 
       className={ className } 

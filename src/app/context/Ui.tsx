@@ -2,45 +2,45 @@
 import { useState, useContext, createContext, Dispatch, SetStateAction } from "react";
 
 interface UIContextProps {
-  patientModalShown: boolean;
-  setPatientModalShown: Dispatch<SetStateAction<boolean>>;
+  modalPatientShown: boolean;
+  setModalPatientShown: Dispatch<SetStateAction<boolean>>;
 
-  patientModalData: Partial<TPatient> | null;
-  setPatientModalData: Dispatch<SetStateAction<Partial<TPatient> | null>>;
+  modalPatientData: Partial<TPatient> | null;
+  setModalPatientData: Dispatch<SetStateAction<Partial<TPatient> | null>>;
   
-  actionModalShown: boolean;
-  setActionModalShown: Dispatch<SetStateAction<boolean>>;
+  modalActionShown: boolean;
+  setModalActionShown: Dispatch<SetStateAction<boolean>>;
 
-  actionModalData: string;
-  setActionModalData: Dispatch<SetStateAction<string>>;
+  modalActionData: string;
+  setModalActionData: Dispatch<SetStateAction<string>>;
 }
 
 const UIContext = createContext<UIContextProps>({
-  patientModalShown: false,
-  setPatientModalShown: () => {},
+  modalPatientShown: false,
+  setModalPatientShown: () => {},
 
-  patientModalData: null,
-  setPatientModalData: () => {},
+  modalPatientData: null,
+  setModalPatientData: () => {},
 
-  actionModalShown: false,
-  setActionModalShown: () => {},
+  modalActionShown: false,
+  setModalActionShown: () => {},
 
-  actionModalData: "",
-  setActionModalData: () => {}
+  modalActionData: "",
+  setModalActionData: () => {}
 });
 
 export const UIContextProvider = ({ children }: { children: any }) => {
-  const [patientModalShown, setPatientModalShown] = useState<boolean>(false);
-  const [patientModalData, setPatientModalData] = useState<Partial<TPatient> | null>(null);
-  const [actionModalShown, setActionModalShown] = useState<boolean>(false);
-  const [actionModalData, setActionModalData] = useState<string>("");
+  const [modalPatientShown, setModalPatientShown] = useState<boolean>(false);
+  const [modalPatientData, setModalPatientData] = useState<Partial<TPatient> | null>(null);
+  const [modalActionShown, setModalActionShown] = useState<boolean>(false);
+  const [modalActionData, setModalActionData] = useState<string>("");
 
   return (
     <UIContext.Provider value={{ 
-      patientModalShown, setPatientModalShown,
-      patientModalData, setPatientModalData,
-      actionModalShown, setActionModalShown,
-      actionModalData, setActionModalData
+      modalPatientShown, setModalPatientShown,
+      modalPatientData, setModalPatientData,
+      modalActionShown, setModalActionShown,
+      modalActionData, setModalActionData
     }}> { children }
     </UIContext.Provider>
   )

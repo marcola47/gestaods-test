@@ -11,7 +11,7 @@ export default function Patient({
   itemData: Partial<TPatient> 
 }): JSX.Element {
   const { patients, setPatients } = usePatientsContext();
-  const { setActionModalShown, setActionModalData, setPatientModalData, setPatientModalShown } = useUIContext();
+  const { setModalActionShown, setModalActionData, setModalPatientData, setModalPatientShown } = useUIContext();
   const [menuShown, setMenuShown] = useState<boolean>(false);
   const menuRef = useRef<HTMLDivElement>(null);
 
@@ -39,14 +39,14 @@ export default function Patient({
   }, [menuShown]);
 
   async function editPatient() {
-    setPatientModalData(patient);
-    setPatientModalShown(true);
+    setModalPatientData(patient);
+    setModalPatientShown(true);
   }
 
   async function deletePatient() {
     if (patient.cpf) {
-      setActionModalData(patient.cpf);
-      setActionModalShown(true);
+      setModalActionData(patient.cpf);
+      setModalActionShown(true);
     }
   }
 

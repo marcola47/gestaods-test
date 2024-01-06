@@ -11,7 +11,18 @@ export async function GET() {
 
 export async function PUT(req: NextRequest) {
   await dbConnection();
-  return NextResponse.json({ status: 200 })
+  const patient = await req.json();
+
+  const updatedPatient = await Patient.findOneAndUpdate(
+    { cpf: patient.cpf },
+    patient, 
+    { new: true, upsert: true } 
+  );
+
+  return NextResponse.json({ 
+    status: 200, 
+    data: updatedPatient 
+  });
 }
 
 export async function DELETE(req: NextRequest) {
