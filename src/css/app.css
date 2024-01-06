@@ -63,10 +63,13 @@ html, button, input, select, textarea {
 .patients__searchbar__icon {
   color: hsl(210, 90%, 50%);
 }
+.patients__searchbar input {
+  width: 100%;
+}
 .patients__labels {
   display: grid;
   grid-template-columns: 7fr 5fr 8fr 9fr 6fr 3fr;
-  padding: 16px 32px 16px 16px;
+  padding: 16px;
   border-radius: 3px;
   background-color: hsl(215, 15%, 95%);
   font-size: 0.9rem;
@@ -136,6 +139,7 @@ html, button, input, select, textarea {
   width: 100%;
   display: flex;
   align-items: center;
+  overflow: hidden;
 }
 .patients__list .patient__data div {
   width: calc(100% - 16px);
@@ -214,6 +218,9 @@ html, button, input, select, textarea {
 }
 .modal__close:hover {
   color: hsl(215, 15%, 65%);
+}
+.modal--action {
+  text-align: center;
 }
 .modal--action > * {
   padding: 16px;
@@ -431,4 +438,72 @@ html, button, input, select, textarea {
 }
 .btn--bg-red:hover {
   background-color: hsl(0, 90%, 60%);
+}
+
+@media screen and (max-width: 1200px) {
+  .app {
+    display: grid;
+    grid-template-rows: 2fr 8fr;
+    place-items: center;
+    overflow: hidden;
+  }
+  .patients {
+    width: calc(100% - 32px);
+    overflow-x: hidden;
+  }
+  .patients__labels, .patients .patient {
+    width: 1110px;
+  }
+  .patients__list {
+    overflow: scroll;
+  }
+}
+@media screen and (max-width: 830px) {
+  .modal--patient {
+    width: calc(100% - 32px);
+  }
+}
+@media screen and (max-width: 768px) {
+  .patients__header {
+    flex-direction: column;
+    gap: 8px;
+  }
+  .modal--patient {
+    width: 100%;
+    height: 100%;
+    border-radius: 0px;
+  }
+  .modal--patient__body {
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    padding-right: 4px;
+  }
+  .modal--patient__body::-webkit-scrollbar {
+    width: 12px;
+    -webkit-transition: all 0.1s ease-in-out;
+    transition: all 0.1s ease-in-out;
+  }
+  .modal--patient__body::-webkit-scrollbar-track {
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
+    background: hsl(215, 15%, 95%);
+  }
+  .modal--patient__body::-webkit-scrollbar-thumb {
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
+    background: hsl(215, 15%, 65%);
+  }
+  .modal--patient__body::-webkit-scrollbar-thumb:hover {
+    background: hsl(215, 15%, 75%);
+  }
+}
+@media screen and (max-width: 480px) {
+  .patients__actions {
+    flex-direction: column;
+    gap: 8px;
+  }
+  .modal--action {
+    width: calc(100% - 32px);
+  }
 }/*# sourceMappingURL=app.css.map */

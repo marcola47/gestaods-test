@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { usePatientsContext } from "@/app/context/Patients";
 import { useUIContext } from "@/app/context/Ui";
 
@@ -20,6 +20,7 @@ export default function ModalPatient(): JSX.Element {
   const [tabShown, setTabShown] = useState<"personal" | "contact">("personal");
   const [shownList, setShownList] = useState<"nationality" | "gender" | "marital_status" | null>(null);
   const [debounceTimer, setDebounceTimer] = useState<NodeJS.Timeout | null>(null);
+  const [height, setHeight] = useState<number>(0);
   
   const [newName, setNewName] = useState<string>(modalPatientData?.name || "");
   const [newNickname, setNewNickname] = useState<string>(modalPatientData?.nickname || "");
@@ -27,7 +28,7 @@ export default function ModalPatient(): JSX.Element {
   const [newCPF, setNewCPF] = useState<string>(modalPatientData?.cpf || "");
   const [newRG, setNewRG] = useState<string>(modalPatientData?.rg || "");
   const [newBirth, setNewBirth] = useState<Date>(modalPatientData?.birth ? new Date(modalPatientData.birth) : new Date());
-  const [newNationality, setNewNationality] = useState<string>(modalPatientData?.nationality || "");
+  const [newNationality, setNewNationality] = useState<string>(modalPatientData?.nationality || "Brasil");
   const [newGender, setNewGender] = useState<TGender>("not_declared");
   const [newMaritalStatus, setNewMaritalStatus] = useState<TMaritalStatus>("not_declared");
   const [newObservations, setNewObservations] = useState<string>(modalPatientData?.observations || "");
@@ -40,6 +41,8 @@ export default function ModalPatient(): JSX.Element {
   const [newStreet, setNewStreet] = useState<string>(modalPatientData?.address?.street || "");
   const [newNumber, setNewNumber] = useState<string>(modalPatientData?.address?.number ? modalPatientData?.address?.number.toString() : "");
   const [newComplement, setNewComplement] = useState<string>(modalPatientData?.address?.complement || "");
+
+  const bodyRef = useRef<HTMLDivElement>(null);
 
   const displayGenders = [
     { key: "male", name: "Masculino", ref: newGender },
@@ -69,6 +72,22 @@ export default function ModalPatient(): JSX.Element {
   }
 
   async function PUTPatient() {
+    const emptyFields = 
+      newName === "" ||
+      newEmail === "" ||
+      newCPF === "" ||
+      newRG === "" ||
+      newObservations === "" ||
+      newIBGE === "" ||
+      newCEP === "" ||
+      newCity === "" ||
+      newUF === "" ||
+      newNeighborhood === "" ||
+      newStreet === ""
+
+    if (emptyFields)
+      alert("Preencha todos os campos obrigatórios!");
+
     const newPatient: TPatient = {
       cpf: newCPF,
       rg: newRG,
@@ -110,6 +129,31 @@ export default function ModalPatient(): JSX.Element {
       hideModal();
     }
   }
+
+  useEffect(() => {
+    if (window.innerWidth <= 768) {
+      function calculateDistances() {
+        const element = bodyRef.current;
+        
+        if (element) {
+          const rect = element.getBoundingClientRect();
+          const elementHeight = window.innerHeight - rect.bottom - 88;
+          
+          if (elementHeight > 0)
+            setHeight(elementHeight);
+        }
+      };
+  
+      calculateDistances();
+      window.addEventListener('scroll', calculateDistances);
+      window.addEventListener('resize', calculateDistances);
+  
+      return () => {
+        window.removeEventListener('scroll', calculateDistances);
+        window.removeEventListener('resize', calculateDistances);
+      };
+    }
+  }, []);
 
   useEffect(() => {
     if (debounceTimer !== null) 
@@ -221,9 +265,14 @@ export default function ModalPatient(): JSX.Element {
                   alt="user" 
                 />
 
-                <div className="modal--patient__body">
+                <div 
+                  className="modal--patient__body"
+                  ref={ bodyRef }
+                  style={{ height: `${height}px` }}
+                >
                   <div className="modal__input">
                     <label htmlFor="name">
+                      <span style={{ color: "red"}}>*</span>
                       Paciente:
                     </label>
 
@@ -250,36 +299,25 @@ export default function ModalPatient(): JSX.Element {
                     />
                   </div>
 
-                  <div 
-                    className="modal__select"
-                    onClick={ () => {toggleShownList("nationality")} }
-                  >
-                    <label htmlFor="nationality">
-                      Nacionalidade:
+                  
+                  <div className="modal__input">
+                    <label htmlFor="email">
+                      <span style={{ color: "red"}}>*</span>
+                      Email:
                     </label>
 
                     <input 
-                      id="nationality"
-                      name="nationality"
-                      type="text" 
-                      readOnly
-                      value={ newNationality }
+                      type="text"
+                      id="email"
+                      name="email"
+                      value={ newEmail }
+                      onChange={ e => setNewEmail(e.target.value) }
                     />
-
-                    <FaChevronDown className="modal__select__chevron"/>
-
-                    {
-                      shownList === "nationality" &&
-                      <List
-                        className="modal__select__list"
-                        elements={ countries }
-                        ListItem={ Nationality }
-                      />
-                    }
                   </div>
 
                   <div className="modal__date-picker">
                     <label htmlFor="">
+                      <span style={{ color: "red"}}>*</span>
                       Data de nascimento:
                     </label>
                     
@@ -311,6 +349,7 @@ export default function ModalPatient(): JSX.Element {
 
                   <div className="modal__input">
                     <label htmlFor="cpf">
+                      <span style={{ color: "red"}}>*</span>
                       CPF:
                     </label>
 
@@ -326,6 +365,7 @@ export default function ModalPatient(): JSX.Element {
 
                   <div className="modal__input">
                     <label htmlFor="rg">
+                      <span style={{ color: "red"}}>*</span>
                       RG:
                     </label>
 
@@ -340,9 +380,39 @@ export default function ModalPatient(): JSX.Element {
 
                   <div 
                     className="modal__select"
+                    onClick={ () => {toggleShownList("nationality")} }
+                  >
+                    <label htmlFor="nationality">
+                      <span style={{ color: "red"}}>*</span>
+                      Nacionalidade:
+                    </label>
+
+                    <input 
+                      id="nationality"
+                      name="nationality"
+                      type="text" 
+                      readOnly
+                      value={ newNationality }
+                    />
+
+                    <FaChevronDown className="modal__select__chevron"/>
+
+                    {
+                      shownList === "nationality" &&
+                      <List
+                        className="modal__select__list"
+                        elements={ countries }
+                        ListItem={ Nationality }
+                      />
+                    }
+                  </div>
+
+                  <div 
+                    className="modal__select"
                     onClick={ () => {toggleShownList("gender")} }
                   >
                     <label htmlFor="gender">
+                      <span style={{ color: "red"}}>*</span>
                       Gênero:
                     </label>
 
@@ -371,6 +441,7 @@ export default function ModalPatient(): JSX.Element {
                     onClick={ () => {toggleShownList("marital_status")} }
                   >
                     <label htmlFor="maritalStatus">
+                      <span style={{ color: "red"}}>*</span>
                       Estado civil:
                     </label>
 
@@ -409,9 +480,14 @@ export default function ModalPatient(): JSX.Element {
                 </div>
               </> 
         
-            : <div className="modal--patient__body">
+            : <div 
+                className="modal--patient__body"
+                ref={ bodyRef }
+                style={{ height: `${height}px` }}
+              >
                 <div className="modal__input">
                   <label htmlFor="cep">
+                    <span style={{ color: "red"}}>*</span>
                     CEP:
                   </label>
 
@@ -426,6 +502,7 @@ export default function ModalPatient(): JSX.Element {
                 
                 <div className="modal__input">
                   <label htmlFor="city">
+                    <span style={{ color: "red"}}>*</span>
                     Cidade:
                   </label>
 
@@ -440,6 +517,7 @@ export default function ModalPatient(): JSX.Element {
 
                 <div className="modal__input">
                   <label htmlFor="uf">
+                    <span style={{ color: "red"}}>*</span>
                     UF:
                   </label>
 
@@ -453,7 +531,23 @@ export default function ModalPatient(): JSX.Element {
                 </div>
 
                 <div className="modal__input">
+                  <label htmlFor="neighborhood">
+                    <span style={{ color: "red"}}>*</span>
+                    Bairro:
+                  </label>
+
+                  <input 
+                    type="text"
+                    id="neighborhood"
+                    name="neighborhood"
+                    value={ newNeighborhood }
+                    onChange={ e => setNewNeighborhood(e.target.value) }
+                  />
+                </div>
+
+                <div className="modal__input">
                   <label htmlFor="street">
+                    <span style={{ color: "red"}}>*</span>
                     Endereço:
                   </label>
 
@@ -480,20 +574,6 @@ export default function ModalPatient(): JSX.Element {
                       const numericValue = e.target.value.replace(/[^0-9]/g, '');
                       setNewNumber(numericValue);
                     }}
-                  />
-                </div>
-
-                <div className="modal__input">
-                  <label htmlFor="neighborhood">
-                    Bairro:
-                  </label>
-
-                  <input 
-                    type="text"
-                    id="neighborhood"
-                    name="neighborhood"
-                    value={ newNeighborhood }
-                    onChange={ e => setNewNeighborhood(e.target.value) }
                   />
                 </div>
 

@@ -1,0 +1,61 @@
+@media screen and (max-width: 1200px) {
+  .app {
+    display: grid;
+    grid-template-rows: 2fr 8fr;
+    place-items: center;
+
+    overflow: hidden;
+  }
+  
+  .patients {
+    width: calc(100% - 32px);
+    overflow-x: hidden;
+
+    &__labels, .patient {
+      width: 1110px;
+    }
+    
+    &__list {
+      overflow: scroll;
+    }
+  }
+}
+
+@media screen and (max-width: 830px) {
+  .modal--patient {
+    width: calc(100% - 32px);
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .patients__header {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .modal--patient {
+    width: 100%;
+    height: 100%;
+    border-radius: 0px;
+
+    &__body {
+      display: flex;
+      flex-direction: column;
+
+      overflow-y: auto;
+      padding-right: 4px;
+      @include scrollbar_small();
+    }
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .patients__actions {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .modal--action {
+    width: calc(100% - 32px);
+  }
+}

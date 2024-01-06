@@ -153,23 +153,20 @@ export default function App() {
         </div>
 
         {
-          !loading && 
-          <>
+          !loading && sortedPatients.length > 0 &&
+          <ul className="patients__list">
             <List
               className="patients__labels"
               elements={ labels }
               ListItem={ Label }
             />
-
-            {
-              sortedPatients.length > 0 &&
-              <List
-                className="patients__list"
-                elements={ sortedPatients }
-                ListItem={ Patient }
-              />
-            }
-          </>
+            
+            <List
+              elements={ sortedPatients }
+              ListItem={ Patient }
+              unwrapped
+            />
+        </ul>
         }
       </div>
 
